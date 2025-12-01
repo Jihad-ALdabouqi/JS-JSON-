@@ -1,0 +1,57 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task 3,1</title>
+</head>
+<body>
+     <form id="projectForm">
+        <label for="subject">Project Title:</label>
+        <input type="text" id="subject" name="subject" required><br><br>
+        <label for="description">Project Description:</label>
+        <textarea id="description" name="description" rows="4" required></textarea><br><br>
+        <label for="userTypes">User Types:</label>
+        <select id="userTypes" name="userTypes" multiple required>
+            <option value="Admin">Admin</option>
+            <option value="User">User</option>
+            <option value="Guest">Guest</option>
+            <option value="Engineers">Engineers</option>
+        </select>
+        <br><br>
+        <label for="technologies">Technologies Used:</label>
+        <input type="text" id="technologies" name="technologies" placeholder="e.g., HTML, CSS, JS" required>    <br><br>
+
+        <input type="submit" value="Submit">
+    </form>
+    <script>
+        document.getElementById("projectForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            const formdata = document.getElementById("projectForm");
+
+            let selectedUserTypes = [...document.getElementById("userTypes").selectedOptions].map(option => option.value);
+
+            let projectData = {
+                subject: formdata.subject.value,
+                description: formdata.description.value,
+                userTypes: selectedUserTypes,
+                technologies: formdata.technologies.value
+            };
+
+            sessionStorage.setItem("projectKey", JSON.stringify(projectData));
+            alert("Project data saved successfully!");
+
+            let data = JSON.parse(sessionStorage.getItem("projectKey"));
+            let output = `
+             Project Title: ${data.subject}<br><br>
+             Project Description: ${data.description}   <br><br>
+             User Types: ${data.userTypes.join(", ")}   <br><br>
+             Technologies Used: ${data.technologies}    <br><br>
+            `;
+            document.write(output);    
+
+
+        });
+    </script>
+</body>
+</html>

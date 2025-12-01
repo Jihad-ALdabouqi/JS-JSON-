@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Users Table</title>
+</head>
+<body>
+
+<div id="toggleBtn" style="background:#2a07f2; color:white; padding:20px; text-align:center; cursor:pointer;font-size: 50px;">
+    Click to show Table / Double Click to hide Table
+</div>
+
+<div id="tableContainer"></div>
+
+<script>
+let toggleBtn = document.getElementById("toggleBtn");
+let container = document.getElementById("tableContainer");
+let isVisible = false;
+let table;
+
+let users = [
+  { firstName: "Liam", lastName: "Walker", age: 28, email: "liam.walker@example.com" },
+  { firstName: "Emma", lastName: "Johnson", age: 24, email: "emma.johnson@example.com" },
+  { firstName: "Noah", lastName: "Brown", age: 31, email: "noah.brown@example.com" },
+  { firstName: "Olivia", lastName: "Davis", age: 29, email: "olivia.davis@example.com" },
+  { firstName: "Sophia", lastName: "Miller", age: 26, email: "sophia.miller@example.com" },
+  { firstName: "James", lastName: "Wilson", age: 33, email: "james.wilson@example.com" },
+  { firstName: "Ava", lastName: "Moore", age: 22, email: "ava.moore@example.com" },
+  { firstName: "Benjamin", lastName: "Taylor", age: 35, email: "benjamin.taylor@example.com" },
+  { firstName: "Mia", lastName: "Anderson", age: 27, email: "mia.anderson@example.com" },
+  { firstName: "Lucas", lastName: "Thomas", age: 30, email: "lucas.thomas@example.com" },
+
+  { firstName: "Charlotte", lastName: "Jackson", age: 25, email: "charlotte.jackson@example.com" },
+  { firstName: "Elijah", lastName: "White", age: 34, email: "elijah.white@example.com" },
+  { firstName: "Amelia", lastName: "Harris", age: 23, email: "amelia.harris@example.com" },
+  { firstName: "Logan", lastName: "Martin", age: 29, email: "logan.martin@example.com" },
+  { firstName: "Harper", lastName: "Thompson", age: 32, email: "harper.thompson@example.com" },
+  { firstName: "Mason", lastName: "Garcia", age: 21, email: "mason.garcia@example.com" },
+  { firstName: "Evelyn", lastName: "Martinez", age: 28, email: "evelyn.martinez@example.com" },
+  { firstName: "Ethan", lastName: "Robinson", age: 27, email: "ethan.robinson@example.com" },
+  { firstName: "Abigail", lastName: "Clark", age: 31, email: "abigail.clark@example.com" },
+  { firstName: "Alexander", lastName: "Rodriguez", age: 26, email: "alexander.rodriguez@example.com" },
+
+  { firstName: "Ella", lastName: "Lewis", age: 22, email: "ella.lewis@example.com" },
+  { firstName: "Henry", lastName: "Lee", age: 33, email: "henry.lee@example.com" },
+  { firstName: "Scarlett", lastName: "Walker", age: 29, email: "scarlett.walker@example.com" },
+  { firstName: "Sebastian", lastName: "Hall", age: 35, email: "sebastian.hall@example.com" },
+  { firstName: "Grace", lastName: "Allen", age: 24, email: "grace.allen@example.com" },
+  { firstName: "Jack", lastName: "Young", age: 30, email: "jack.young@example.com" },
+  { firstName: "Chloe", lastName: "Hernandez", age: 27, email: "chloe.hernandez@example.com" },
+  { firstName: "Daniel", lastName: "King", age: 34, email: "daniel.king@example.com" },
+  { firstName: "Victoria", lastName: "Wright", age: 25, email: "victoria.wright@example.com" },
+  { firstName: "Matthew", lastName: "Lopez", age: 28, email: "matthew.lopez@example.com" },
+
+  { firstName: "Aria", lastName: "Hill", age: 23, email: "aria.hill@example.com" },
+  { firstName: "Joseph", lastName: "Scott", age: 29, email: "joseph.scott@example.com" },
+  { firstName: "Hannah", lastName: "Green", age: 31, email: "hannah.green@example.com" },
+  { firstName: "Samuel", lastName: "Adams", age: 26, email: "samuel.adams@example.com" },
+  { firstName: "Lily", lastName: "Baker", age: 24, email: "lily.baker@example.com" },
+  { firstName: "David", lastName: "Gonzalez", age: 33, email: "david.gonzalez@example.com" },
+  { firstName: "Zoey", lastName: "Nelson", age: 22, email: "zoey.nelson@example.com" },
+  { firstName: "Andrew", lastName: "Carter", age: 36, email: "andrew.carter@example.com" },
+  { firstName: "Nora", lastName: "Mitchell", age: 27, email: "nora.mitchell@example.com" },
+  { firstName: "Wyatt", lastName: "Perez", age: 28, email: "wyatt.perez@example.com" },
+
+  { firstName: "Riley", lastName: "Roberts", age: 25, email: "riley.roberts@example.com" },
+  { firstName: "Isaac", lastName: "Turner", age: 32, email: "isaac.turner@example.com" },
+  { firstName: "Zoe", lastName: "Phillips", age: 23, email: "zoe.phillips@example.com" },
+  { firstName: "Gabriel", lastName: "Campbell", age: 34, email: "gabriel.campbell@example.com" },
+  { firstName: "Layla", lastName: "Parker", age: 22, email: "layla.parker@example.com" },
+  { firstName: "Owen", lastName: "Evans", age: 28, email: "owen.evans@example.com" },
+  { firstName: "Penelope", lastName: "Edwards", age: 26, email: "penelope.edwards@example.com" },
+  { firstName: "Dylan", lastName: "Collins", age: 30, email: "dylan.collins@example.com" },
+  { firstName: "Camila", lastName: "Stewart", age: 24, email: "camila.stewart@example.com" },
+  { firstName: "Luke", lastName: "Sanchez", age: 31, email: "luke.sanchez@example.com" },
+
+];
+
+
+
+function showTable() {
+    table = document.createElement("table");
+
+    let thead = document.createElement("thead");
+    let headerRow = document.createElement("tr");
+    ["Name","Age","Email",].forEach(h => {
+        let th = document.createElement("th");
+        th.textContent = h;
+        headerRow.appendChild(th);
+    });
+    thead.appendChild(headerRow);
+    table.appendChild(thead);
+
+    let tbody = document.createElement("tbody");
+    users.forEach(u => {
+        let row = document.createElement("tr");
+        let tdName = document.createElement("td");
+        tdName.textContent = u.firstName + " " + u.lastName;
+        row.appendChild(tdName);
+
+        let tdAge = document.createElement("td");
+        tdAge.textContent = u.age;
+        row.appendChild(tdAge);
+
+        let tdEmail = document.createElement("td");
+        tdEmail.textContent = u.email;
+        row.appendChild(tdEmail);
+
+    
+
+        tbody.appendChild(row);
+    });
+    table.appendChild(tbody);
+
+    container.appendChild(table);
+}
+
+toggleBtn.addEventListener("click", () => {
+    if(!isVisible) showTable();
+    isVisible = true;
+});
+
+toggleBtn.addEventListener("dblclick", () => {
+    container.innerHTML = "";
+    isVisible = false;
+});
+</script>
+
+</body>
+</html>

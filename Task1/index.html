@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task 1</title>
+   
+</head>
+<body>
+    <form  id="PERSON">
+    <label for ="name">Name:</label>
+    <input type="text" id="name" name="name" required>
+    <label for="email">Email</label>
+    <input type="email" id="email" name="email" required>
+    <label for="mobile">Mobile</label>
+    <input type="tel" id="mobile" name="mobile" required>
+    <button type="submit">cilck on Me print</button>
+    </form>
+    <p id="output"  style="display:flex; gap:10px;"></p>
+    <hr>
+    <table border="1" id="tableperson">
+  
+    </table>
+   
+    <script>
+
+    document.getElementById("PERSON").addEventListener("submit", function(event) {
+    event.preventDefault();   
+
+    const name = document.getElementById("name").value;
+    const email = document.getElementById("email").value;
+    const mobile = document.getElementById("mobile").value;
+
+    document.getElementById("output").innerHTML = `
+        <span style="background: green; gap=10px">${name}</span>
+        <span style="background: red; gap=10px">${email}</span>
+        <span style="background: yellow; gap=10px">${mobile}</span>
+    `;
+});
+
+
+document.getElementById("PERSON").addEventListener("submit", function(event) {
+    event.preventDefault();   
+
+    const name = document.getElementById("name").value;
+    const email = document.getElementById("email").value;
+    const mobile = document.getElementById("mobile").value;
+
+    const table = document.getElementById("tableperson");
+    const newRow = table.insertRow();
+
+    const nameCell = newRow.insertCell(0);
+    const emailCell = newRow.insertCell(1);
+    const mobileCell = newRow.insertCell(2);
+
+    nameCell.textContent = name;
+    emailCell.textContent = email;
+    mobileCell.textContent = mobile;
+});
+</script>
+</body>
+ </html>
